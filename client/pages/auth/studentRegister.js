@@ -28,7 +28,6 @@ const StudentRegister = () => {
     const [branch, setBranch] = useState('');
     const [semester, setSemester] = useState('');
     const [rollNumber, setRollNumber] = useState('');
-    const {currentUser, setCurrentUser } = useContext(UserContext);
 
 
     // FORM VALIDATION FUCNTION
@@ -130,14 +129,22 @@ const StudentRegister = () => {
                             >
                                 Branch
                             </label>
-                            <input
+                            <select
                                 type="text"
                                 name="branch"
                                 value={branch}
                                 onChange={(e) => setBranch(e.target.value)}
                                 required
                                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                            />
+                            >
+                                <option>Computer Science</option>
+                                <option>IT</option>
+                                <option>Mechanical</option>
+                                <option>Electrical Engineering</option>
+                                <option>Electronics and Telecommunications</option>
+                                <option>Civil Engineering</option>
+                                <option>Artificial Inteligence</option>
+                            </select>
                         </div>
 
                         <div className="mb-2">
@@ -147,15 +154,25 @@ const StudentRegister = () => {
                             >
                                 Semester
                             </label>
-                            <input
+                            <select
                                 type="text"
                                 name="semester"
                                 value={semester}
                                 onChange={(e) => setSemester(e.target.value)}
                                 required
                                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                            />
+                            >
+                                <option>1st</option>
+                                <option>2nd</option>
+                                <option>3rd</option>
+                                <option>4th</option>
+                                <option>5th</option>
+                                <option>6th</option>
+                                <option>7th</option>
+                                <option>8th</option>
+                            </select>
                         </div>
+
 
                         <div className="mb-2">
                             <label

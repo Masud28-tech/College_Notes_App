@@ -12,9 +12,9 @@ const EditUserModal = () => {
 
     return (
         <div
-            className="justify-end items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none"
+            className="absolute justify-end items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none"
         >
-            <div className="absolute top-14 w-auto my-6 mx-auto max-w-3xl">
+            <div className="absolute -top-1 w-auto my-1 mx-1  max-w-3xl">
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
 
@@ -58,13 +58,3 @@ const EditUserModal = () => {
 }
 
 export default EditUserModal;
-
-
-{/* <div className="mr-2 bg-gray-200 p-5 m-3" >
-    <div>
-        <button>Edit</button>
-    </div>
-    <div>
-        <button>Logout</button>
-    </div>
-</div> */}

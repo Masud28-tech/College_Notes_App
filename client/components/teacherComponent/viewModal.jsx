@@ -4,10 +4,11 @@ import { UserContext } from "../../context/UserContext";
 
 const ViewModal = ({ setIsViewModalOpen }) => {
     const { topicSelected } = useContext(UserContext);
+    
     return (
 
         <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none"
+            className="absolute justify-center items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none"
         >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
                 {/*content*/}
@@ -17,13 +18,6 @@ const ViewModal = ({ setIsViewModalOpen }) => {
                         <h3 className="text-xl font-semibold">
                             {topicSelected.subject}
                         </h3>
-                        <button
-                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                        >
-                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                ×
-                            </span>
-                        </button>
                     </div>
 
                     {/*body*/}

@@ -31,12 +31,6 @@ const teacherSchema = new mongoose.Schema({
         required: true,
         min:5
     },
-
-    subject: {
-        type: Array,
-        required: false,
-        min:2
-    }
 });
 
 module.exports = mongoose.model('Teachers', teacherSchema);

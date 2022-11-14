@@ -6,6 +6,7 @@ const cors = require('cors');
 const studentRoutes = require('./routes/studentRoutes');
 const teacherRoutes = require('./routes/teacherRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const notesDataRoutes = require('./routes/notesRoutes');
 
 dotenv.config();
 const app = express();
@@ -16,7 +17,7 @@ app.use(express.json());
 app.use('/api/auth', studentRoutes);
 app.use('/api/auth', teacherRoutes);
 app.use('/api/auth', adminRoutes);
-
+app.use('/api/data', notesDataRoutes);
 
 const mongoURI = "mongodb://localhost:27017/clg_notes_manager?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
 

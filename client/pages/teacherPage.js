@@ -1,24 +1,36 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Image from 'next/image';
 
 import data from '../data';
 import Logo from '../assets/logoHeader.jpg';
+import { NotesContext } from '../context/NotesContext';
+
 import SelectedSubjects from '../components/teacherComponent/selectedSubjects';
 import EditUserModal from '../components/EditUserModal';
 import ViewModal from '../components/teacherComponent/viewModal';
+import AddCourseModal from '../components/teacherComponent/addCourseModal';
 
 const TeacherPage = ({ user }) => {
+    const { notesData } = useContext(NotesContext);
     const [isSelected, setIsSelected] = useState(false);
     const [selectedSemester, setSelectedSemester] = useState(null);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
 
     const handleSemesterChange = (sem) => {
         setIsSelected(true);
         setSelectedSemester(sem);
     }
 
-    const handleToggler = () => setIsEditModalOpen(!isEditModalOpen);
+    const handleEditUserToggler = () => setIsEditModalOpen(!isEditModalOpen);
+    const handleAddCourseToggler = () => setIsAddCourseModalOpen(!isAddCourseModalOpen);
+
+
+    const techersNotesData = notesData.filter((item) => item.teacher.teacherName === user.teacherName)
+    const semestersData = [
+        ...new Set(techersNotesData.map((ele) => ele.semester))
+    ];
 
     return (
         <section className="h-screen w-screen bg-gray-200 flex flex-col-reverse sm:flex-row min-h-0 min-w-0 overflow-hidden">
@@ -39,7 +51,7 @@ const TeacherPage = ({ user }) => {
                     <button
                         className="border rounded-full ml-2 w-10 h-10 text-center leading-none text-gray-200 bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                         type="button"
-                        onClick={handleToggler}
+                        onClick={handleEditUserToggler}
                     >
                         <i className="fas fa-cog fill-current"></i>
                     </button>
@@ -49,28 +61,25 @@ const TeacherPage = ({ user }) => {
                 <section className="flex-1 pt-3 md:p-6 lg:mb-0 lg:min-h-0 lg:min-w-0">
                     <div className="flex flex-col lg:flex-row h-full w-full">
 
+                        {/* <!-- SIDE BAR: SEMESTERS LISTED --> */}
                         <div className="border pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap">
 
-                            {/* <!-- SIDE BAR: SEMESTERS LISTED --> */}
-                            {data && data.map((item) => {
-                                if (item.branch === user.branch && item.teacher === user.teacherName) {
-                                    return <div key={item.id} className="bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 hover:bg-red-600 hover:text-gray-200" onClick={() => handleSemesterChange(item.semester)}>
-                                        <p className='p-2 m-2 font-poppins font-semibold text-xl'>{item.semester} Semester</p>
+                            {semestersData && semestersData.map((semester) => {
+                                    return <div key={semester} className="bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 hover:bg-red-600 hover:text-gray-200" onClick={() => handleSemesterChange(semester)}>
+                                        <p className='p-2 m-2 font-poppins font-semibold text-xl'>{semester} Semester</p>
                                     </div>
-                                }
                             })}
-
 
 
                         </div>
 
-                        <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0">
+                        {/* <!-- overflow content right --> */}
+                        <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0 relative">
 
-                            {/* <!-- overflow content right --> */}
                             <div className="bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto">
                                 {/* LOGOUT AND EDIT USER DATA MODAL */}
                                 {isEditModalOpen && <EditUserModal />}
-                                
+
                                 {
                                     !isSelected
                                         ? <div className='flex flex-1 justify-center mt-10 p-2 text-3xl text-white font-poppins font-bold '> No semester selected.</div>
@@ -84,7 +93,20 @@ const TeacherPage = ({ user }) => {
                                     </div>
                                 }
 
+                                {/* MODAL TO ADD SUBJECT IN SELECTED SEMESTER */}
+                                {isAddCourseModalOpen && <AddCourseModal setIsAddCourseModalOpen={setIsAddCourseModalOpen} user={user} selectedSemester={selectedSemester} />}
 
+
+
+                                {/* ADD COURSE/SUBJECT BUTTON */}
+                                <div className="justify-end items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none">
+                                    <button
+                                        onClick={handleAddCourseToggler}
+                                        disabled={!isSelected}
+                                        className="absolute top-25 bottom-20 right-12 my-12 mx-auto max-w-3xl shadow-md rounded-full ml-2 w-14 h-14 text-center leading-none text-green-200 bg-green-600 hover:bg-green-500 focus:outline-none focus:border-transparent">
+                                        <i className="fas fa-plus fill-current"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 

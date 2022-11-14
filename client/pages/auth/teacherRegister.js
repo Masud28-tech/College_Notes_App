@@ -71,7 +71,7 @@ const TeacherRegister = () => {
             else {
                 setCurrentUser(data.teacher);
                 localStorage.setItem("currentUser", JSON.stringify(data.teacher));
-                window.location.reload();
+                // window.location.reload();
                 router.push('/');
             }
         }
@@ -118,22 +118,31 @@ const TeacherRegister = () => {
                             className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                     </div>
+                    
                     <div className="mb-2">
-                        <label
-                            htmlFor="course"
-                            className="block text-sm font-semibold text-gray-800"
-                        >
-                            Branch
-                        </label>
-                        <input
-                            type="text"
-                            name="branch"
-                            value={branch}
-                            onChange={(e) => setBranch(e.target.value)}
-                            required
-                            className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        />
-                    </div>
+                            <label
+                                htmlFor="branch"
+                                className="block text-sm font-semibold text-gray-800"
+                            >
+                                Branch
+                            </label>
+                            <select
+                                type="text"
+                                name="branch"
+                                value={branch}
+                                onChange={(e) => setBranch(e.target.value)}
+                                required
+                                className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                            >
+                                <option>Computer Science</option>
+                                <option>IT</option>
+                                <option>Mechanical</option>
+                                <option>Electrical Engineering</option>
+                                <option>Electronics and Telecommunications</option>
+                                <option>Civil Engineering</option>
+                                <option>Artificial Inteligence</option>
+                            </select>
+                        </div>
 
                     <div className="mb-2">
                         <label
