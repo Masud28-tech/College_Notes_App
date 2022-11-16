@@ -3,15 +3,20 @@ import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { NotesContext } from '../../context/NotesContext';
 
-const SelectedSubjects = ({ selectedSemester, user, setIsViewModalOpen }) => {
+const SelectedSubjects = ({ selectedSemester, user, setIsViewModalOpen, setIsAddNotesModalOpen }) => {
     const {setTopicSelected} = useContext(UserContext);
     const {notesData} = useContext(NotesContext);
 
     const subjectsData = notesData.filter((item) => item.teacher.teacherName === user.teacherName && item.semester === selectedSemester);
 
-    const clickHandler = (item) => {
+    const handleView = (item) => {
         setTopicSelected(item);
         setIsViewModalOpen(true);
+    }
+
+    const handleAddNotes = (subject) => {
+        setTopicSelected(subject);
+        setIsAddNotesModalOpen(true);
     }
 
 
@@ -21,10 +26,10 @@ const SelectedSubjects = ({ selectedSemester, user, setIsViewModalOpen }) => {
                 <h1 className='mb-5 text-2xl'> {subject.subject} </h1>
 
                 <div className='flex flex-row'>
-                    <button className='bg-green-600 p-2 m-1 w-1/8 hover:bg-black' onClick={() => clickHandler(subject)}>
+                    <button className='bg-green-600 p-2 m-1 w-1/8 hover:bg-black' onClick={() => handleView(subject)}>
                         View
                     </button>
-                    <button className='bg-red-600 p-2 m-1 w-1/8 hover:bg-black'>
+                    <button className='bg-red-600 p-2 m-1 w-1/8 hover:bg-black' onClick={() => handleAddNotes(subject)}>
                         Add Notes
                     </button>
                 </div>

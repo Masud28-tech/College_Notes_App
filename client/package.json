@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-pdf-viewer/core": "^3.8.0",
+    "@react-pdf-viewer/default-layout": "^3.8.0",
     "axios": "^1.1.3",
     "next": "13.0.0",
+    "pdfjs-dist": "^3.0.279",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-toastify": "^9.1.1",

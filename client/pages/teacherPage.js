@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import Image from 'next/image';
 
-import data from '../data';
+// import data from '../data';
 import Logo from '../assets/logoHeader.jpg';
 import { NotesContext } from '../context/NotesContext';
 
@@ -9,12 +9,15 @@ import SelectedSubjects from '../components/teacherComponent/selectedSubjects';
 import EditUserModal from '../components/EditUserModal';
 import ViewModal from '../components/teacherComponent/viewModal';
 import AddCourseModal from '../components/teacherComponent/addCourseModal';
+import AddNotesModal from '../components/teacherComponent/addNotesModal';
 
 const TeacherPage = ({ user }) => {
     const { notesData } = useContext(NotesContext);
+
     const [isSelected, setIsSelected] = useState(false);
     const [selectedSemester, setSelectedSemester] = useState(null);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+    const [isAddNotesModalOpen, setIsAddNotesModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
 
@@ -83,13 +86,21 @@ const TeacherPage = ({ user }) => {
                                 {
                                     !isSelected
                                         ? <div className='flex flex-1 justify-center mt-10 p-2 text-3xl text-white font-poppins font-bold '> No semester selected.</div>
-                                        : <SelectedSubjects selectedSemester={selectedSemester} user={user} setIsViewModalOpen={setIsViewModalOpen} />
+                                        : <SelectedSubjects selectedSemester={selectedSemester} user={user} setIsViewModalOpen={setIsViewModalOpen} setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
 
                                 }
-
+                                
+                                {/* MODAL OF VIEW-TOPICS : VIEW BUTTON RESULT */}
                                 {
                                     isViewModalOpen && <div className="flex justify-center items-center mt-2">
                                         <ViewModal setIsViewModalOpen={setIsViewModalOpen} />
+                                    </div>
+                                }
+
+                                 {/* MODAL OF ADD-NOTES : ADD-NOTES BUTTON RESULT */}
+                                 {
+                                    isAddNotesModalOpen && <div className="flex justify-center items-center mt-2">
+                                        <AddNotesModal setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
                                     </div>
                                 }
 

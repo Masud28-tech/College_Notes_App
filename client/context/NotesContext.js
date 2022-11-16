@@ -6,7 +6,7 @@ import { addNotesDataRoute, fetchNotesDataRoute } from '../utils/AllRoutes';
 export const NotesContext = createContext();
 
 export const NotesContextProvider = ({ children }) => {
-    
+    const [fileUploaded, setFileUploaded] = useState("");
     const [notesData, setNotesData] = useState([]);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export const NotesContextProvider = ({ children }) => {
     }
 
     return (
-        <NotesContext.Provider value={{ notesData, setNotesData, addNotesData, fetchNotesData }}>
+        <NotesContext.Provider value={{ notesData, setNotesData, addNotesData, fetchNotesData, fileUploaded, setFileUploaded }}>
             {children}
         </NotesContext.Provider>
     )

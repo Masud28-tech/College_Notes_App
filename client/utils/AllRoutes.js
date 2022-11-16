@@ -11,3 +11,4 @@ export const loginAdminRoute = `${host}/api/auth/adminLogin`;
 
 export const addNotesDataRoute = `${host}/api/data/addNotesData`;
 export const fetchNotesDataRoute = `${host}/api/data/fetchNotesData`;
+export const uploadPDFNotesRoute = `${host}/api/data/pushIntoTopicsPDFNotes`;
