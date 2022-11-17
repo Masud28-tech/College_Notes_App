@@ -6,13 +6,13 @@ import { addNotesDataRoute, fetchNotesDataRoute } from '../utils/AllRoutes';
 export const NotesContext = createContext();
 
 export const NotesContextProvider = ({ children }) => {
-    const [fileUploaded, setFileUploaded] = useState("");
     const [notesData, setNotesData] = useState([]);
+    const [fileSelected, setFileSelected] = useState(null);
 
     useEffect(() => {
         fetchNotesData();
     }, [])
-    
+
 
     const addNotesData = async (branch, semester, subject, user) => {
         const { data } = await axios.post(addNotesDataRoute, { branch, semester, subject, user });
@@ -27,7 +27,7 @@ export const NotesContextProvider = ({ children }) => {
     }
 
     const fetchNotesData = async () => {
-        const  {data}  = await axios.get(fetchNotesDataRoute);
+        const { data } = await axios.get(fetchNotesDataRoute);
         if (!data.status) {
             console.log(data.msg);
         }
@@ -38,7 +38,7 @@ export const NotesContextProvider = ({ children }) => {
     }
 
     return (
-        <NotesContext.Provider value={{ notesData, setNotesData, addNotesData, fetchNotesData, fileUploaded, setFileUploaded }}>
+        <NotesContext.Provider value={{ notesData, setNotesData, addNotesData, fetchNotesData, fileSelected, setFileSelected }}>
             {children}
         </NotesContext.Provider>
     )

@@ -4,15 +4,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import { ToastContainer, toast } from 'react-toastify'; // For warning & Alert
-import 'react-toastify/dist/ReactToastify.css';
-const toastOptions = {
-    position: 'upper-right',
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: 'dark',
-}
 
 import { loginTeacherRoute } from '../../utils/AllRoutes'
 import { UserContext } from '../../context/UserContext';
@@ -27,17 +18,14 @@ const TeacherLogin = () => {
 
     const handleFormValidation = () => {
         if (password.length < 3) {
-            toast.error("Password must have atleast 5 characters", toastOptions);
             console.log("Password must have atleast 5 characters");
             return false;
         }
         else if (!email.length) {
-            toast.error("Please enter valid email id", toastOptions);
             console.log("Please enter valid email id");
             return false;
         }
         else if (email.length <= 12 || email.substring(email.length - 12, email.length) != "@sbjt.edu.in") {
-            toast.error("Please enter valid email id , NOTE: Valid email must end with @sbjt.edu.in", toastOptions);
             alert("Please enter valid email id , NOTE: Valid email must end with @sbjt.edu.in");
             return false;
         }
@@ -51,7 +39,7 @@ const TeacherLogin = () => {
             const { data } = await axios.post(loginTeacherRoute, { email, password });
 
             if (!data.status) {
-                toast.error(data.msg, toastOptions);
+                console.log("Error while teacher login:", data.msg,);
             }
             else {
                 localStorage.setItem("currentUser", JSON.stringify(data.teacher));

@@ -1,26 +1,27 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import axios from "axios";
 
 import { uploadPDFNotesRoute } from '../../utils/AllRoutes';
 import { UserContext } from "../../context/UserContext";
-import { NotesContext } from "../../context/NotesContext";
 
 import { Worker } from '@react-pdf-viewer/core'; // Import the main component
 import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css'; // Import the styles
 
+import CheckMarkSVG from '../../assets/checkmark.svg';
+
 
 const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
 
-    const router = useRouter();
     const { topicSelected } = useContext(UserContext);
 
     const [category, setCategory] = useState('');
     const [fileType, setFileType] = useState('');
     const [fileName, setFileName] = useState('');
     const [pdfFile, setPdfFile] = useState(null);
-    const [fileData, setFileData] = useState({ fileCategory: "", fileName: "", fileUrl: "", fileType: "", });
+    const [isUploaded, setIsUploaded] = useState(false);
 
     const reqFileType = ['application/pdf'];
 
@@ -33,6 +34,7 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
                     reader.readAsDataURL(selectedFile);
                     reader.onloadend = (e) => {
                         setPdfFile(e.target.result);
+                        console.log(e.target.result);
                     }
                 }
                 else {
@@ -44,6 +46,7 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
             else {
                 console.log('select your file');
             }
+
         }
     }
 
@@ -55,11 +58,10 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
                 { topicSelected, category, fileType, fileName, pdfFile });
 
             if (!data.status) {
-                toast.error(data.msg);
                 console.log("Error uploading PDF file", data.msg);
             }
-
-            console.log(data.noteData);
+            setIsUploaded(true);
+            
         }
     }
 
@@ -144,30 +146,45 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
                         </form>
                     </div>
 
+                    {
+                        isUploaded
+                        &&
+                        <div className="border-black border-2 m-2 p-8 text-center">
+                            <h1 className="font-semibold font-poppins text-xl">File Added Successfully.</h1>
+                            <div className="flex justify-center">
+                                <Image className="w-1/3 h-1/3" src={CheckMarkSVG} alt="checkMark" />
+                            </div>
+                        </div>
+                    }
 
-                    <div>
-                        {/* show pdf conditionally (if we have one)  */}
-                        {pdfFile
-                            && <>
+                    {
+                        !isUploaded
+                        &&
+                        <div>
+
+                            {/* show pdf conditionally (if we have one)  */}
+                            {pdfFile &&
                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
-                                    <div
-                                        style={{
-                                            border: '1px solid rgba(0, 0, 0, 0.3)',
-                                            height: '750px',
-                                        }}
-                                    >
+
+                                    <div style={{ border: '1px solid rgba(0, 0, 0, 0.3)', height: '750px', }}>
                                         <Viewer fileUrl={pdfFile} />
                                     </div>
-                                </Worker>
-                            </>
-                        }
 
-                        {/* if we dont have pdf or viewPdf state is null */}
-                        {!pdfFile &&
-                            <div className='flex flex-1 justify-center text-xl bg-white'>
-                                No pdf file selected
-                            </div>}
-                    </div>
+                                </Worker>
+
+                            }
+
+                            {/* if we dont have pdf or viewPdf state is null */}
+                            {!pdfFile &&
+                                <div className='border-black border-2 m-2 p-8 text-center'>
+                                    <h1 className="font-semibold font-poppins text-xl">
+                                        No pdf file selected
+                                    </h1>
+                                </div>
+                            }
+                        </div>
+                    }
+
 
 
                     {/*footer*/}

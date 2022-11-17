@@ -4,15 +4,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import { ToastContainer, toast } from 'react-toastify'; // For warning
-import 'react-toastify/dist/ReactToastify.css';
-const toastOptions = {
-    position: 'upper-right',
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: 'dark',
-}
 
 import { loginStudentRoute } from '../../utils/AllRoutes';
 import { UserContext } from '../../context/UserContext';
@@ -26,17 +17,14 @@ const StudentLogin = () => {
 
     const handleFormValidation = () => {
        if (password.length < 3) {
-            toast.error("Password must have atleast 5 characters", toastOptions);
             console.log("Password must have atleast 5 characters");
             return false;
         }
         else if (!email.length) {
-            toast.error("Please enter valid email id", toastOptions);
             console.log("Please enter valid email id");
             return false;
         }
         else if (email.length <= 12 || email.substring(email.length - 12, email.length) != "@sbjt.edu.in") {
-            toast.error("Please enter valid email id , NOTE: Valid email must end with @sbjt.edu.in", toastOptions);
             alert("Please enter valid email id , NOTE: Valid email must end with @sbjt.edu.in");
             return false;
         }
@@ -50,11 +38,11 @@ const StudentLogin = () => {
             const { data } = await axios.post(loginStudentRoute, { email, password });
 
             if (!data.status) {
-                toast.error(data.msg, toastOptions);
-                console.log("Error while loggin student", data.msg);
+                console.log("Error while student login: ", data.msg);
             }
             else {
                 localStorage.setItem("currentUser", JSON.stringify(data.student));
+                setCurrentUser(data.student);
                 // window.location.reload();
                 router.push('/');
             }
@@ -151,7 +139,6 @@ const StudentLogin = () => {
                     </p>
                 </div>
             </div>
-            <ToastContainer />
         </>
     )
 }

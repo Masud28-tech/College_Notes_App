@@ -40,7 +40,7 @@ module.exports.pushTopicsPDFNotes = async (req, res, next) => {
     try {
         const { topicSelected, category, fileType, fileName, pdfFile } = req.body;
 
-        let noteData = await NotesData.findOne( topicSelected);
+        let noteData = await NotesData.findById(topicSelected._id);
         if (!noteData) {
             return res.json({ msg: "Data Not Found", status: false });
         }

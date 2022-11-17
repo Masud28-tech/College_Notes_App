@@ -1,21 +1,23 @@
 import { useState, useContext } from 'react'
 import Image from 'next/image';
 
-// import data from '../data';
-import Logo from '../assets/logoHeader.jpg';
 import { NotesContext } from '../context/NotesContext';
 
+import ViewModal from '../components/viewModal';
 import SelectedSubjects from '../components/teacherComponent/selectedSubjects';
-import EditUserModal from '../components/EditUserModal';
-import ViewModal from '../components/teacherComponent/viewModal';
 import AddCourseModal from '../components/teacherComponent/addCourseModal';
 import AddNotesModal from '../components/teacherComponent/addNotesModal';
+import EditUserModal from '../components/EditUserModal';
+
+import Logo from '../assets/logoHeader.jpg';
 
 const TeacherPage = ({ user }) => {
     const { notesData } = useContext(NotesContext);
 
     const [isSelected, setIsSelected] = useState(false);
     const [selectedSemester, setSelectedSemester] = useState(null);
+    const [dataAvailable, setDataAvailable] = useState(false);
+
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [isAddNotesModalOpen, setIsAddNotesModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -24,16 +26,26 @@ const TeacherPage = ({ user }) => {
     const handleSemesterChange = (sem) => {
         setIsSelected(true);
         setSelectedSemester(sem);
+        let flag = false;
+        notesData.map((item) => {
+            if (item.semester === sem) {
+                setDataAvailable(true);
+                flag = true;
+            }
+        })
+        if (!flag) setDataAvailable(false);
     }
 
     const handleEditUserToggler = () => setIsEditModalOpen(!isEditModalOpen);
     const handleAddCourseToggler = () => setIsAddCourseModalOpen(!isAddCourseModalOpen);
 
 
-    const techersNotesData = notesData.filter((item) => item.teacher.teacherName === user.teacherName)
-    const semestersData = [
-        ...new Set(techersNotesData.map((ele) => ele.semester))
-    ];
+    // const techersNotesData = notesData.filter((item) => item.teacher.teacherName === user.teacherName)
+    // const semestersData = [
+    //     ...new Set(techersNotesData.map((ele) => ele.semester))
+    // ];
+    const semestersData = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'];
+
 
     return (
         <section className="h-screen w-screen bg-gray-200 flex flex-col-reverse sm:flex-row min-h-0 min-w-0 overflow-hidden">
@@ -68,58 +80,73 @@ const TeacherPage = ({ user }) => {
                         <div className="border pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap">
 
                             {semestersData && semestersData.map((semester) => {
-                                    return <div key={semester} className="bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 hover:bg-red-600 hover:text-gray-200" onClick={() => handleSemesterChange(semester)}>
-                                        <p className='p-2 m-2 font-poppins font-semibold text-xl'>{semester} Semester</p>
-                                    </div>
+                                return <div key={semester} className="bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 hover:bg-red-600 hover:text-gray-200" onClick={() => handleSemesterChange(semester)}>
+                                    <p className='p-2 m-2 font-poppins font-semibold text-xl'>{semester} Semester</p>
+                                </div>
                             })}
 
 
                         </div>
 
-                        {/* <!-- overflow content right --> */}
-                        <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0 relative">
+                        {
+                            dataAvailable ?
+                                (
+                                    <>
+                                        {/* <!-- overflow content right --> */}
+                                        <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0 relative">
 
-                            <div className="bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto">
-                                {/* LOGOUT AND EDIT USER DATA MODAL */}
-                                {isEditModalOpen && <EditUserModal />}
+                                            <div className="bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto">
+                                                {/* LOGOUT AND EDIT USER DATA MODAL */}
+                                                {isEditModalOpen && <EditUserModal />}
 
-                                {
-                                    !isSelected
-                                        ? <div className='flex flex-1 justify-center mt-10 p-2 text-3xl text-white font-poppins font-bold '> No semester selected.</div>
-                                        : <SelectedSubjects selectedSemester={selectedSemester} user={user} setIsViewModalOpen={setIsViewModalOpen} setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
+                                                {
+                                                    !isSelected
+                                                        ? <div className='flex flex-1 justify-center mt-10 p-2 text-3xl text-white font-poppins font-bold '> No semester selected.</div>
+                                                        : <SelectedSubjects selectedSemester={selectedSemester} user={user} setIsViewModalOpen={setIsViewModalOpen} setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
 
-                                }
-                                
-                                {/* MODAL OF VIEW-TOPICS : VIEW BUTTON RESULT */}
-                                {
-                                    isViewModalOpen && <div className="flex justify-center items-center mt-2">
-                                        <ViewModal setIsViewModalOpen={setIsViewModalOpen} />
+                                                }
+
+                                                {/* MODAL OF VIEW-TOPICS : VIEW BUTTON RESULT */}
+                                                {
+                                                    isViewModalOpen && <div className="flex justify-center items-center mt-2">
+                                                        <ViewModal setIsViewModalOpen={setIsViewModalOpen} />
+                                                    </div>
+                                                }
+
+                                                {/* MODAL OF ADD-NOTES : ADD-NOTES BUTTON RESULT */}
+                                                {
+                                                    isAddNotesModalOpen && <div className="flex justify-center items-center mt-2">
+                                                        <AddNotesModal setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
+                                                    </div>
+                                                }
+
+                                                {/* MODAL TO ADD SUBJECT IN SELECTED SEMESTER */}
+                                                {isAddCourseModalOpen && <AddCourseModal setIsAddCourseModalOpen={setIsAddCourseModalOpen} user={user} selectedSemester={selectedSemester} />}
+
+
+
+                                                {/* ADD COURSE/SUBJECT BUTTON */}
+                                                <div className="justify-end items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none">
+                                                    <button
+                                                        onClick={handleAddCourseToggler}
+                                                        disabled={!isSelected}
+                                                        className="absolute top-25 bottom-20 right-12 my-12 mx-auto max-w-3xl shadow-md rounded-full ml-2 w-14 h-14 text-center leading-none text-green-200 bg-green-600 hover:bg-green-500 focus:outline-none focus:border-transparent">
+                                                        <i className="fas fa-plus fill-current"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                                :
+                                (
+                                    <div className='bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto flex justify-center'>
+                                        <div className='mt-12 text-4xl font-poppins font-semibold text-white'> No data available.</div>
                                     </div>
-                                }
-
-                                 {/* MODAL OF ADD-NOTES : ADD-NOTES BUTTON RESULT */}
-                                 {
-                                    isAddNotesModalOpen && <div className="flex justify-center items-center mt-2">
-                                        <AddNotesModal setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
-                                    </div>
-                                }
-
-                                {/* MODAL TO ADD SUBJECT IN SELECTED SEMESTER */}
-                                {isAddCourseModalOpen && <AddCourseModal setIsAddCourseModalOpen={setIsAddCourseModalOpen} user={user} selectedSemester={selectedSemester} />}
+                                )
+                        }
 
 
-
-                                {/* ADD COURSE/SUBJECT BUTTON */}
-                                <div className="justify-end items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none">
-                                    <button
-                                        onClick={handleAddCourseToggler}
-                                        disabled={!isSelected}
-                                        className="absolute top-25 bottom-20 right-12 my-12 mx-auto max-w-3xl shadow-md rounded-full ml-2 w-14 h-14 text-center leading-none text-green-200 bg-green-600 hover:bg-green-500 focus:outline-none focus:border-transparent">
-                                        <i className="fas fa-plus fill-current"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
 
                     </div>
                 </section>
@@ -135,8 +162,8 @@ const TeacherPage = ({ user }) => {
                         <i className="fas fa-question fill-current"></i>
                     </button>
                 </footer>
-            </main>
-        </section>
+            </main >
+        </section >
     );
 }
 
