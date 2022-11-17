@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from 'next/image';
 
 import { UserContext } from "../context/UserContext";
@@ -12,10 +12,17 @@ const ViewModal = ({ setIsViewModalOpen }) => {
     const { topicSelected } = useContext(UserContext);
     const { setFileSelected } = useContext(NotesContext);
 
+    const [activeCategory, setActiveCategory] = useState('Notes')
+
+    const filteredNotes = topicSelected.topics.filter((item) => item.category === activeCategory);
+
+    const handleCategoryChange = (category) => {
+        setActiveCategory(category);
+    }
 
     const handlePreviewNotes = (topic) => {
         setFileSelected(topic);
-   
+
         var iframe = "<iframe width='100%' height='100%' src='" + topic.fileUrl + "'></iframe>"
         var x = window.open();
         x.document.open();
@@ -34,16 +41,35 @@ const ViewModal = ({ setIsViewModalOpen }) => {
                     {/*header*/}
                     <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                         <h3 className="text-xl font-semibold">
-                            {topicSelected.subject}
+                            {topicSelected.subject}: Study materials
                         </h3>
                     </div>
 
+                    {/* CATEGORY SHIF BAR */}
+                    <div className="text-sm font-poppins font-semibold text-gray-500 flex flex-row justify-center p-2 m-1">
+                        <span className={`p-2 hover:text-black hover:border-blue-900 border-b-4 ${activeCategory === 'Notes' ? 'text-black border-black border-b-4' : ''}`}
+                            onClick={() => handleCategoryChange('Notes')}
+                        >
+                            Notes &nbsp; &nbsp; |
+                        </span>
+                        <span className={`p-2  hover:text-black hover:border-blue-900 border-b-4 ${activeCategory === 'Question paper' ? 'text-black border-black border-b-4' : ''}`}
+                            onClick={() => handleCategoryChange('Question paper')}
+                        >
+                            Question papers &nbsp; |
+                        </span>
+                        <span className={`p-2  hover:text-black hover:border-blue-900 border-b-4 ${activeCategory === 'Solved Papers' ? 'text-black border-black border-b-4' : ''}`}
+                            onClick={() => handleCategoryChange('Solved Papers')}
+                        >
+                            Solved Papers
+                        </span>
+                    </div>
+
                     {/*body*/}
-                    <div className="relative p-6 m-2 flex flex-row justify-center content-center">
+                    <div className="grid grid-cols-3 gap-4 relative p-6 m-2 justify-center content-center">
                         {
-                            topicSelected.topics.length > 0
+                            filteredNotes.length > 0
                                 ?
-                                topicSelected.topics.map((topic, idx) =>
+                                filteredNotes.map((topic, idx) =>
                                     <div key={idx} className="flex flex-col justify-center">
                                         {
                                             topic.fileType === "PDF" &&
