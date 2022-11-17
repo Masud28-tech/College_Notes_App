@@ -135,7 +135,6 @@ const TeacherLogin = () => {
                     </Link>
                 </p>
             </div>
-            <ToastContainer />
         </div>
     )
 }

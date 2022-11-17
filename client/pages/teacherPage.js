@@ -79,74 +79,77 @@ const TeacherPage = ({ user }) => {
                         {/* <!-- SIDE BAR: SEMESTERS LISTED --> */}
                         <div className="border pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap">
 
-                            {semestersData && semestersData.map((semester) => {
-                                return <div key={semester} className="bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 hover:bg-red-600 hover:text-gray-200" onClick={() => handleSemesterChange(semester)}>
-                                    <p className='p-2 m-2 font-poppins font-semibold text-xl'>{semester} Semester</p>
-                                </div>
-                            })}
+                            <div className='bg-blue-800 w-full h-14 min-h-0 min-w-0 mb-2 rounded flex justify-center'>
+                                <h2 className='font-semibold font-poppins text-lg text-white m-1'>{user.branch}</h2>
+                            </div>
 
+                            {semestersData && semestersData.map((semester) => {
+                                return (
+                                    <div
+                                        key={semester}
+                                        className={`bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 rounded cursor-pointer hover:bg-red-500 hover:text-gray-200 ${(semester === selectedSemester) ? 'text-gray-200 transition ease-in-out delay-150 bg-red-500 ' : ''}`}
+                                        onClick={() => handleSemesterChange(semester)}>
+                                        <p className='p-2 m-2 font-poppins font-semibold text-xl'>{semester} Semester</p>
+                                    </div>
+                                )
+                            })}
 
                         </div>
 
-                        {
-                            dataAvailable ?
-                                (
-                                    <>
-                                        {/* <!-- overflow content right --> */}
-                                        <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0 relative">
+                        {/* <!-- overflow content right --> */}
+                        <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0 relative">
+                            <div className="bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto">
+                                {/* LOGOUT AND EDIT USER DATA MODAL */}
+                                {isEditModalOpen && <EditUserModal />}
 
-                                            <div className="bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto">
-                                                {/* LOGOUT AND EDIT USER DATA MODAL */}
-                                                {isEditModalOpen && <EditUserModal />}
+                                {
+                                    !isSelected
+                                        ? <div className='flex flex-1 justify-center mt-10 p-2 text-3xl text-white font-poppins font-bold '> No semester selected.</div>
+                                        : <SelectedSubjects selectedSemester={selectedSemester} user={user} setIsViewModalOpen={setIsViewModalOpen} setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
 
-                                                {
-                                                    !isSelected
-                                                        ? <div className='flex flex-1 justify-center mt-10 p-2 text-3xl text-white font-poppins font-bold '> No semester selected.</div>
-                                                        : <SelectedSubjects selectedSemester={selectedSemester} user={user} setIsViewModalOpen={setIsViewModalOpen} setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
+                                }
 
-                                                }
-
-                                                {/* MODAL OF VIEW-TOPICS : VIEW BUTTON RESULT */}
-                                                {
-                                                    isViewModalOpen && <div className="flex justify-center items-center mt-2">
-                                                        <ViewModal setIsViewModalOpen={setIsViewModalOpen} />
-                                                    </div>
-                                                }
-
-                                                {/* MODAL OF ADD-NOTES : ADD-NOTES BUTTON RESULT */}
-                                                {
-                                                    isAddNotesModalOpen && <div className="flex justify-center items-center mt-2">
-                                                        <AddNotesModal setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
-                                                    </div>
-                                                }
-
-                                                {/* MODAL TO ADD SUBJECT IN SELECTED SEMESTER */}
-                                                {isAddCourseModalOpen && <AddCourseModal setIsAddCourseModalOpen={setIsAddCourseModalOpen} user={user} selectedSemester={selectedSemester} />}
-
-
-
-                                                {/* ADD COURSE/SUBJECT BUTTON */}
-                                                <div className="justify-end items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none">
-                                                    <button
-                                                        onClick={handleAddCourseToggler}
-                                                        disabled={!isSelected}
-                                                        className="absolute top-25 bottom-20 right-12 my-12 mx-auto max-w-3xl shadow-md rounded-full ml-2 w-14 h-14 text-center leading-none text-green-200 bg-green-600 hover:bg-green-500 focus:outline-none focus:border-transparent">
-                                                        <i className="fas fa-plus fill-current"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </>
-                                )
-                                :
-                                (
-                                    <div className='bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto flex justify-center'>
-                                        <div className='mt-12 text-4xl font-poppins font-semibold text-white'> No data available.</div>
+                                {/* MODAL OF VIEW-TOPICS : VIEW BUTTON RESULT */}
+                                {
+                                    isViewModalOpen && <div className="flex justify-center items-center mt-2">
+                                        <ViewModal setIsViewModalOpen={setIsViewModalOpen} />
                                     </div>
-                                )
+                                }
+
+                                {/* MODAL OF ADD-NOTES : ADD-NOTES BUTTON RESULT */}
+                                {
+                                    isAddNotesModalOpen && <div className="flex justify-center items-center mt-2">
+                                        <AddNotesModal setIsAddNotesModalOpen={setIsAddNotesModalOpen} />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        {
+                            !dataAvailable
+                            &&
+                            <div className='bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto flex justify-center relative'>
+                                {/* LOGOUT AND EDIT USER DATA MODAL */}
+                                {isEditModalOpen && <EditUserModal />}
+
+                                <div className='mt-12 text-4xl font-poppins font-semibold text-white'> No data available.</div>
+                            </div>
                         }
 
 
+
+                        {/* MODAL TO ADD SUBJECT IN SELECTED SEMESTER */}
+                        {isAddCourseModalOpen && <AddCourseModal setIsAddCourseModalOpen={setIsAddCourseModalOpen} user={user} selectedSemester={selectedSemester} />}
+
+                        {/* ADD COURSE/SUBJECT BUTTON */}
+                        <div className="justify-end items-center flex overflow-x-hidden overflow-y-auto inset-0 z-50 outline-none focus:outline-none">
+                            <button
+                                onClick={handleAddCourseToggler}
+                                disabled={!isSelected}
+                                className="absolute top-25 bottom-20 right-12 my-12 mx-auto max-w-3xl shadow-md rounded-full ml-2 w-14 h-14 text-center leading-none text-green-200 bg-green-600 hover:bg-green-500 focus:outline-none focus:border-transparent">
+                                <i className="fas fa-plus fill-current"></i>
+                            </button>
+                        </div>
 
                     </div>
                 </section>
@@ -158,12 +161,12 @@ const TeacherPage = ({ user }) => {
                     <p className="text-gray-600">Made by @SB Jain Students</p>
                     <div className="flex-1"></div>
                     <button
-                        className="shadow-md ml-auto border rounded-full ml-2 w-10 h-10 text-center leading-none text-green-200 bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        className="shadow-md border rounded-full ml-2 w-10 h-10 text-center leading-none text-green-200 bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
                         <i className="fas fa-question fill-current"></i>
                     </button>
                 </footer>
-            </main >
-        </section >
+            </main>
+        </section>
     );
 }
 

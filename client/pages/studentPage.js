@@ -74,8 +74,15 @@ const StudentPage = ({ user }) => {
                         {/* <!-- SIDE BAR: SEMESTERS LISTED --> */}
                         <div className="border pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap">
 
+                            <div className='bg-blue-800 w-full h-14 min-h-0 min-w-0 mb-2 rounded flex justify-center'>
+                                <h2 className='font-semibold font-poppins text-lg text-white m-1'>{user.branch}</h2>
+                            </div>
+
                             {semestersData && semestersData.map((semester) => {
-                                return <div key={semester} className="bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 hover:bg-red-600 hover:text-gray-200" onClick={() => handleSemesterChange(semester)}>
+                                return <div
+                                    key={semester}
+                                    className={`bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 rounded cursor-pointer hover:bg-red-500 hover:text-gray-200 ${(semester === selectedSemester) ? 'text-gray-200 transition ease-in-out delay-150 bg-red-500 ' : ''}`}
+                                    onClick={() => handleSemesterChange(semester)}>
                                     <p className='p-2 m-2 font-poppins font-semibold text-xl'>{semester} Semester</p>
                                 </div>
                             })}
@@ -83,50 +90,52 @@ const StudentPage = ({ user }) => {
 
                         </div>
 
-                        {
-                            dataAvailable ?
-                                (
-                                    <>
-                                        {/* <!-- overflow content right --> */}
-                                        <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0 relative">
 
-                                            <div className="bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto">
-                                                {/* LOGOUT AND EDIT USER DATA MODAL */}
-                                                {isEditModalOpen && <EditUserModal />}
+                        {/* <!-- overflow content right --> */}
+                        <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0 relative">
 
-                                                {
-                                                    !isSelected ?
-                                                        (
-                                                            <div className='flex flex-1 justify-center mt-10 p-2 text-3xl text-white font-poppins font-bold '>
-                                                                No semester selected.
-                                                            </div>
-                                                        )
+                            <div className="bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto">
+                                {/* LOGOUT AND EDIT USER DATA MODAL */}
+                                {isEditModalOpen && <EditUserModal />}
 
-                                                        : (
-                                                            <SelectedSemister selectedSemester={selectedSemester} user={user} setIsViewModalOpen={setIsViewModalOpen} />
-                                                        )
-
-                                                }
-
-                                                {/* MODAL OF VIEW-TOPICS : VIEW BUTTON RESULT */}
-                                                {
-                                                    isViewModalOpen && <div className="flex justify-center items-center mt-2">
-                                                        <ViewModal setIsViewModalOpen={setIsViewModalOpen} />
-                                                    </div>
-                                                }
-
-
+                                {
+                                    !isSelected ?
+                                        (
+                                            <div className='flex flex-1 justify-center mt-10 p-2 text-3xl text-white font-poppins font-bold '>
+                                                No semester selected.
                                             </div>
-                                        </div>
-                                    </>
-                                )
-                                :
-                                (
-                                    <div className='bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto flex justify-center'>
-                                        <div className='mt-12 text-4xl font-poppins font-semibold text-white'> No data available.</div>
+                                        )
+
+                                        : (
+                                            <SelectedSemister selectedSemester={selectedSemester} user={user} setIsViewModalOpen={setIsViewModalOpen} />
+                                        )
+
+                                }
+
+                                {/* MODAL OF VIEW-TOPICS : VIEW BUTTON RESULT */}
+                                {
+                                    isViewModalOpen && <div className="flex justify-center items-center mt-2">
+                                        <ViewModal setIsViewModalOpen={setIsViewModalOpen} />
                                     </div>
-                                )
+                                }
+
+
+                            </div>
+                        </div>
+
+
+                        {/* WHEN NO DATA SUBJECTS ADDED IN SELECTED SEMESTER  */}
+                        {
+                            !dataAvailable
+                            &&
+                            <div className='bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto flex justify-center relative'>
+                                {/* LOGOUT AND EDIT USER DATA MODAL */}
+                                {isEditModalOpen && <EditUserModal />}
+
+                                <div className='mt-12 text-4xl font-poppins font-semibold text-white'> No data available.</div>
+                            </div>
                         }
+
 
                     </div>
                 </section>
