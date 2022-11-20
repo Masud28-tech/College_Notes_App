@@ -22,7 +22,7 @@ const ViewModal = ({ setIsViewModalOpen }) => {
 
     const handlePreviewNotes = (topic) => {
         setFileSelected(topic);
-
+        
         var iframe = "<iframe width='100%' height='100%' src='" + topic.fileUrl + "'></iframe>"
         var x = window.open();
         x.document.open();
@@ -85,7 +85,9 @@ const ViewModal = ({ setIsViewModalOpen }) => {
                                         }
                                         {
                                             topic.fileType === "Image" &&
-                                            <div className="bg-gray-200 p-2 m-2 rounded flex-1 justify-center">
+                                            <div
+                                                onClick={() => handlePreviewNotes(topic)}
+                                                className="bg-gray-200 p-2 m-2 rounded flex-1 justify-center">
                                                 <Image className="m-1" src={ImageFile} alt="pdf-file" />
                                                 <p className="font-poppins font-semibold text-sm">
                                                     {topic.fileName}

@@ -36,7 +36,7 @@ module.exports.fetchNotesData = async (req, res, next) => {
 }
 
 
-module.exports.pushTopicsPDFNotes = async (req, res, next) => {
+module.exports.pushIntoTopicsPDFNotes = async (req, res, next) => {
     try {
         const { topicSelected, category, fileType, fileName, pdfFile } = req.body;
 
@@ -65,5 +65,37 @@ module.exports.pushTopicsPDFNotes = async (req, res, next) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal server error while uploading notes pdf file/files!");
+    }
+}
+
+module.exports.pushIntoTopicsImagesNotes = async (req, res, next) => {
+    try {
+        const { topicSelected, category, fileType, fileName, imageFile } = req.body;
+
+        let noteData = await NotesData.findById(topicSelected._id);
+        if (!noteData) {
+            return res.json({ msg: "Data Not Found", status: false });
+        }
+
+        noteData = await NotesData.findOneAndUpdate(
+            { subject: topicSelected.subject },
+            {
+                $push: {
+                    topics: {
+                        category: category,
+                        fileName: fileName,
+                        fileType: fileType,
+                        fileUrl: imageFile
+                    }
+                }
+            },
+            { upsert: true }
+        );
+
+        return res.json({ status: true, noteData });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Internal server error while uploading notes Image or Images!");
     }
 }

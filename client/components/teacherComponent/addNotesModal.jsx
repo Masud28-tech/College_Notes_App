@@ -1,16 +1,15 @@
 import { useContext, useState } from "react";
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import axios from "axios";
 
-import { uploadPDFNotesRoute } from '../../utils/AllRoutes';
+import { uploadPDFNotesRoute, uploadImageNotesRoute } from '../../utils/AllRoutes';
 import { UserContext } from "../../context/UserContext";
 
 import { Worker } from '@react-pdf-viewer/core'; // Import the main component
 import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css'; // Import the styles
 
-import CheckMarkSVG from '../../assets/checkmark.svg';
+import CheckMarkSVG from '../../assets/checkmark.svg'; // Shows check rign after file uploaded successfully.
 
 
 const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
@@ -21,15 +20,17 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
     const [fileType, setFileType] = useState('');
     const [fileName, setFileName] = useState('');
     const [pdfFile, setPdfFile] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [previewImg, setPreviewImg] = useState(null);
     const [isUploaded, setIsUploaded] = useState(false);
 
-    const reqFileType = ['application/pdf'];
+    const reqPDFFileType = ['application/pdf'];
 
     const handleFileChange = (e) => {
         if (fileType === 'PDF') {
             let selectedFile = e.target.files[0];
             if (selectedFile) {
-                if (selectedFile && reqFileType.includes(selectedFile.type)) {
+                if (selectedFile && reqPDFFileType.includes(selectedFile.type)) {
                     let reader = new FileReader();
                     reader.readAsDataURL(selectedFile);
                     reader.onloadend = (e) => {
@@ -46,13 +47,36 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
             else {
                 console.log('select your file');
             }
-
         }
+
+        else if (fileType === "Image") {
+            let selectedFile = e.target.files[0];
+            setPreviewImg(URL.createObjectURL(e.target.files[0]));
+            if (selectedFile) {
+                let reader = new FileReader();
+                reader.readAsDataURL(selectedFile);
+                reader.onloadend = (e) => {
+                    setImageFile(e.target.result);
+                }
+            }
+            else {
+                setImageFile(null);
+                console.log('Error: Please select valid Image file');
+            }
+            setFileName(selectedFile.name);
+        }
+
+        else {
+            console.log('select your file');
+        }
+
     }
+
 
     const handleFileSubmit = async (e) => {
         e.preventDefault();
-        if (pdfFile !== null) {
+        //UPLOADS PDF FILE
+        if (pdfFile !== null && imageFile === null) {
             console.log({ topicSelected, category, fileType, fileName, pdfFile });
             const { data } = await axios.put(uploadPDFNotesRoute,
                 { topicSelected, category, fileType, fileName, pdfFile });
@@ -60,9 +84,20 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
             if (!data.status) {
                 console.log("Error uploading PDF file", data.msg);
             }
-            setIsUploaded(true);
-            
         }
+
+        // UPLOADS IMAGE FILE
+        else if (imageFile !== null && pdfFile === null) {
+
+            const { data } = await axios.put(uploadImageNotesRoute,
+                { topicSelected, category, fileType, fileName, imageFile });
+
+            if (!data.status) {
+                console.log("Error uploading Image file", data.msg);
+            }
+        }
+
+        setIsUploaded(true);
     }
 
     return (
@@ -122,6 +157,7 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
                                     required
                                     className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 >
+                                    <option>Choose File Type:</option>
                                     <option>Image</option>
                                     <option>PDF</option>
                                     <option>PPT</option>
@@ -166,7 +202,7 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
                             {pdfFile &&
                                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js">
 
-                                    <div style={{ border: '1px solid rgba(0, 0, 0, 0.3)', height: '750px', }}>
+                                    <div style={{ border: '1px solid rgba(0, 0, 0, 0.3)', width: '376', height: '750px', layout: "fixed" }}>
                                         <Viewer fileUrl={pdfFile} />
                                     </div>
 
@@ -174,11 +210,16 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
 
                             }
 
+                            {previewImg &&
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={previewImg} alt="uploaded image" />
+                            }
+
                             {/* if we dont have pdf or viewPdf state is null */}
-                            {!pdfFile &&
+                            {!pdfFile && !imageFile &&
                                 <div className='border-black border-2 m-2 p-8 text-center'>
                                     <h1 className="font-semibold font-poppins text-xl">
-                                        No pdf file selected
+                                        No file selected
                                     </h1>
                                 </div>
                             }
