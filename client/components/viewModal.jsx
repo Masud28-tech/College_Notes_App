@@ -8,6 +8,8 @@ import PDFFIle from '../assets/pdf-file.png';
 import ImageFile from '../assets/image-file.svg';
 import PPTFile from '../assets/ppt-file.png';
 
+import { TrimFileName } from "../utils/trimFileName";
+
 const ViewModal = ({ setIsViewModalOpen }) => {
     const { topicSelected } = useContext(UserContext);
     const { setFileSelected } = useContext(NotesContext);
@@ -22,7 +24,7 @@ const ViewModal = ({ setIsViewModalOpen }) => {
 
     const handlePreviewNotes = (topic) => {
         setFileSelected(topic);
-        
+
         var iframe = "<iframe width='100%' height='100%' src='" + topic.fileUrl + "'></iframe>"
         var x = window.open();
         x.document.open();
@@ -47,17 +49,17 @@ const ViewModal = ({ setIsViewModalOpen }) => {
 
                     {/* CATEGORY SHIF BAR */}
                     <div className="text-sm font-poppins font-semibold text-gray-500 flex flex-row justify-center p-2 m-1">
-                        <span className={`p-2 hover:text-black hover:border-blue-900 border-b-4 ${activeCategory === 'Notes' ? 'text-black border-black border-b-4' : ''}`}
+                        <span className={`p-2 hover:text-black hover:border-blue-900 border-b-4 cursor-pointer ${activeCategory === 'Notes' ? 'text-black border-black border-b-4' : ''}`}
                             onClick={() => handleCategoryChange('Notes')}
                         >
                             Notes &nbsp; &nbsp; |
                         </span>
-                        <span className={`p-2  hover:text-black hover:border-blue-900 border-b-4 ${activeCategory === 'Question paper' ? 'text-black border-black border-b-4' : ''}`}
+                        <span className={`p-2  hover:text-black hover:border-blue-900 border-b-4 cursor-pointer ${activeCategory === 'Question paper' ? 'text-black border-black border-b-4' : ''}`}
                             onClick={() => handleCategoryChange('Question paper')}
                         >
                             Question papers &nbsp; |
                         </span>
-                        <span className={`p-2  hover:text-black hover:border-blue-900 border-b-4 ${activeCategory === 'Solved Papers' ? 'text-black border-black border-b-4' : ''}`}
+                        <span className={`p-2  hover:text-black hover:border-blue-900 border-b-4 cursor-pointer ${activeCategory === 'Solved Papers' ? 'text-black border-black border-b-4' : ''}`}
                             onClick={() => handleCategoryChange('Solved Papers')}
                         >
                             Solved Papers
@@ -70,7 +72,7 @@ const ViewModal = ({ setIsViewModalOpen }) => {
                             filteredNotes.length > 0
                                 ?
                                 filteredNotes.map((topic, idx) =>
-                                    <div key={idx} className="flex flex-col justify-center">
+                                    <div key={idx} className="flex flex-col justify-center cursor-pointer">
                                         {
                                             topic.fileType === "PDF" &&
                                             <div
@@ -79,7 +81,7 @@ const ViewModal = ({ setIsViewModalOpen }) => {
                                             >
                                                 <Image className="m-1" src={PDFFIle} alt="pdf-file" />
                                                 <p className="font-poppins font-semibold text-sm">
-                                                    {topic.fileName}
+                                                    {TrimFileName(topic.fileName)}
                                                 </p>
                                             </div>
                                         }
@@ -90,7 +92,7 @@ const ViewModal = ({ setIsViewModalOpen }) => {
                                                 className="bg-gray-200 p-2 m-2 rounded flex-1 justify-center">
                                                 <Image className="m-1" src={ImageFile} alt="pdf-file" />
                                                 <p className="font-poppins font-semibold text-sm">
-                                                    {topic.fileName}
+                                                    {TrimFileName(topic.fileName)}
                                                 </p>
                                             </div>
                                         }
@@ -99,7 +101,7 @@ const ViewModal = ({ setIsViewModalOpen }) => {
                                             <div className="bg-gray-200 p-2 m-2 rounded flex-1 justify-center">
                                                 <Image className="m-1" src={PPTFile} alt="pdf-file" />
                                                 <p className="font-poppins font-semibold text-sm">
-                                                    {topic.fileName}
+                                                    {TrimFileName(topic.fileName)}
                                                 </p>
                                             </div>
                                         }
