@@ -4,16 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
 
-import { ToastContainer, toast } from 'react-toastify'; // For warning & Alert
-import 'react-toastify/dist/ReactToastify.css';
-const toastOptions = {
-    position: 'upper-right',
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: 'dark',
-}
-
 import { registerAdminRoute } from '../../utils/AllRoutes';
 import { UserContext } from '../../context/UserContext';
 import Logo from '../../assets/sbjainlogo.png';
@@ -24,29 +14,29 @@ const AdminRegister = () => {
     const [adminName, setAdminName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const { setCurrentUser} = useContext(UserContext);
+    const { setCurrentUser } = useContext(UserContext);
 
     // FORM VALIDATION FUCNTION
     const handleFormValidation = () => {
 
         if (password !== confirmPassword) {
-            toast.error("Password and Confirm Password are not same!", toastOptions);
+            console.log("Password and Confirm Password are not same!");
             return false;
         }
         else if (password.length < 5) {
-            toast.error("Password must have atleast 5 characters", toastOptions);
+            console.log("Password must have atleast 5 characters");
             return false;
         }
         else if (adminName.length < 1) {
-            toast.error("Student name can not be empty", toastOptions);
+            console.log("Teacher name can not be empty");
             return false;
         }
         else if (!email.length) {
-            toast.error("Please enter valid email id", toastOptions);
+            console.log("Please enter valid email id");
             return false;
         }
         else if (email.length <= 12 || email.substring(email.length - 12, email.length) != "@sbjt.edu.in") {
-            toast.error("Please enter valid email id , NOTE: Valid email must end with @sbjt.edu.in", toastOptions);
+            console.log("Please enter valid email id , NOTE: Valid email must end with @sbjt.edu.in");
             return false;
         }
 
@@ -190,7 +180,6 @@ const AdminRegister = () => {
                     </Link>
                 </p>
             </div>
-            <ToastContainer />
         </div>
     )
 }
