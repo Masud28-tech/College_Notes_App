@@ -61,18 +61,18 @@ const DataContainer = ({ branch, semister }) => {
 
 
             {/* <!-- SIDE BAR: SEMESTERS LISTED --> */}
-            <div className="overflow-y-auto border p-2 mr-2 w-1/6 lg:pb-0 border-black bg-gray-300 lg:max-w-sm flex flex-row lg:flex-col flex-wrap lg:flex-nowrap">
+            <div className="overflow-auto border p-2 mr-2 w-1/6 lg:pb-0 border-black bg-gray-300 lg:max-w-sm flex flex-row lg:flex-col flex-wrap lg:flex-nowrap">
                 <div className='m-2 font-bold'>Teachers alloted</div>
 
                 {filterData.map(({ teacher, subject }, idx) => (
-                    <div key={idx} className="bg-white w-full min-h-0 min-w-0 mb-4">
-                        <div class="py-3 px-6 border-b border-gray-300">
+                    <div key={idx} className="bg-white w-full min-h-0 min-w-0 mb-4 p-1 rounded">
+                        <div class="border-b border-gray-300 mb-1">
                             <h5 class="text-gray-900 text-xl font-bold mb-2 font-poppins">
                                 {teacher.teacherName}
                             </h5>
                             <p className='font-semibold text-sm text-red-900'>@{subject}</p>
                         </div>
-                        <div className='p-1 font-poppins font-semibold'>
+                        <div className='font-poppins font-semibold text-xs'>
                             📧:{teacher.email}
                         </div>
                     </div>

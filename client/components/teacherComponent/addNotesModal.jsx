@@ -113,7 +113,7 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
                         <h3 className="text-xl font-semibold">
                             Add Notes in: {topicSelected?.subject}
                         </h3>
-                        <h5 className="text-lg mt-2">Accepted format: .pdf/.png/.jpe</h5>
+                        <h5 className="text-xs mt-2 font-poppins text-gray-500">Accepted format: .pdf/.png/.jpe</h5>
                     </div>
 
                     {/*body*/}

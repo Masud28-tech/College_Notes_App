@@ -79,7 +79,8 @@ const TeacherPage = ({ user }) => {
                         {/* <!-- SIDE BAR: SEMESTERS LISTED --> */}
                         <div className="border pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap">
 
-                            <div className='bg-blue-800 w-full h-14 min-h-0 min-w-0 mb-2 rounded flex justify-center'>
+                            {/* HEADER */}
+                            <div className='bg-gray-800 w-full h-14 min-h-0 min-w-0 mb-2 rounded flex justify-center'>
                                 <h2 className='font-semibold font-poppins text-lg text-white m-1'>{user.branch}</h2>
                             </div>
 
@@ -87,7 +88,7 @@ const TeacherPage = ({ user }) => {
                                 return (
                                     <div
                                         key={semester}
-                                        className={`bg-red-200 w-full h-24 min-h-0 min-w-0 mb-4 rounded cursor-pointer hover:bg-red-500 hover:text-gray-200 ${(semester === selectedSemester) ? 'text-gray-200 transition ease-in-out delay-150 bg-red-500 ' : ''}`}
+                                        className={`bg-white w-full h-24 min-h-0 min-w-0 mb-4 rounded cursor-pointer hover:bg-blue-900 hover:text-gray-200 ${(semester === selectedSemester) ? 'text-gray-200 transition ease-in-out delay-150 bg-blue-800 ' : ''}`}
                                         onClick={() => handleSemesterChange(semester)}>
                                         <p className='p-2 m-2 font-poppins font-semibold text-xl'>{semester} Semester</p>
                                     </div>
@@ -99,6 +100,12 @@ const TeacherPage = ({ user }) => {
                         {/* <!-- overflow content right --> */}
                         <div className="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0 relative">
                             <div className="bg-blue-500 w-full h-full min-h-0 min-w-0 overflow-auto">
+
+                                {/* HEADER */}
+                                <div className='bg-gray-100 text-center m-2 rounded'>
+                                    <h1 className='p-2 text-xl font-poppins font-semibold'>{selectedSemester} Semister: {user.branch}</h1>
+                                </div>
+
                                 {/* LOGOUT AND EDIT USER DATA MODAL */}
                                 {isEditModalOpen && <EditUserModal />}
 
