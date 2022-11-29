@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { addNotesDataRoute, fetchNotesDataRoute } from '../utils/AllRoutes';
+import { addNotesDataRoute, fetchNotesDataRoute, deleteNotesDataRoute } from '../utils/AllRoutes';
 
 export const NotesContext = createContext();
 
@@ -37,8 +37,19 @@ export const NotesContextProvider = ({ children }) => {
         }
     }
 
+    const deleteNotesData = async (topicSelected, topic) => {
+        const res = await axios.put(deleteNotesDataRoute, { topicSelected, topic });
+        if (!res.status) {
+            console.log(res.msg);
+        }
+        else {
+            console.log("File deleted Successfully");
+            window.location.reload();
+        }
+    }
+
     return (
-        <NotesContext.Provider value={{ notesData, setNotesData, addNotesData, fetchNotesData, fileSelected, setFileSelected }}>
+        <NotesContext.Provider value={{ notesData, setNotesData, addNotesData, fetchNotesData, deleteNotesData, fileSelected, setFileSelected }}>
             {children}
         </NotesContext.Provider>
     )

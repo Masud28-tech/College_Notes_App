@@ -35,6 +35,28 @@ module.exports.fetchNotesData = async (req, res, next) => {
     }
 }
 
+module.exports.deleteNotesData = async (req, res, next) => {
+    try {
+        const { topicSelected, topic } = req.body;
+
+        let noteData = await NotesData.findById(topicSelected._id);
+        if (!noteData) {
+            return res.json({ msg: "Data Not Found", status: false });
+        }
+
+        await NotesData.findOneAndUpdate(
+            { _id: topicSelected._id },
+            { $pull: { topics: { fileUrl: topic.fileUrl } } },
+            { safe: true, multi: false }
+        );
+        return res.status(200).json({ message: "Notes File Deleted Successfully" });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Internal server error while deleting notes data!");
+    }
+}
+
 
 module.exports.pushIntoTopicsPDFNotes = async (req, res, next) => {
     try {

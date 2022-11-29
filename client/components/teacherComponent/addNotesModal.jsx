@@ -75,9 +75,13 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
 
     const handleFileSubmit = async (e) => {
         e.preventDefault();
+
+        if (category === "" || fileName === "" || fileType === "") {
+            alert("Please fill all the inputs correctly!");
+            return;
+        }
         //UPLOADS PDF FILE
         if (pdfFile !== null && imageFile === null) {
-            console.log({ topicSelected, category, fileType, fileName, pdfFile });
             const { data } = await axios.put(uploadPDFNotesRoute,
                 { topicSelected, category, fileType, fileName, pdfFile });
 
@@ -98,6 +102,11 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
         }
 
         setIsUploaded(true);
+    }
+
+    const handleCloseModal = () => {
+        setIsAddNotesModalOpen(false);
+        window.location.reload();
     }
 
     return (
@@ -134,6 +143,7 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
                                     required
                                     className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 >
+                                    <option>Choose Category:</option>
                                     <option>Question paper</option>
                                     <option>Solved Papers</option>
                                     <option>Notes</option>
@@ -240,7 +250,7 @@ const AddNotesModal = ({ setIsAddNotesModalOpen }) => {
                         <button
                             className="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={() => setIsAddNotesModalOpen(false)}
+                            onClick={handleCloseModal}
                         >
                             Cancel
                         </button>

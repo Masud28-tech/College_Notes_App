@@ -10,9 +10,9 @@ import PPTFile from '../assets/ppt-file.png';
 
 import { TrimFileName } from "../utils/trimFileName";
 
-const ViewModal = ({ setIsViewModalOpen }) => {
+const ViewModal = ({ setIsViewModalOpen, user }) => {
     const { topicSelected } = useContext(UserContext);
-    const { setFileSelected } = useContext(NotesContext);
+    const { setFileSelected, deleteNotesData } = useContext(NotesContext);
 
     const [activeCategory, setActiveCategory] = useState('Notes')
 
@@ -76,33 +76,76 @@ const ViewModal = ({ setIsViewModalOpen }) => {
                                         {
                                             topic.fileType === "PDF" &&
                                             <div
-                                                onClick={() => handlePreviewNotes(topic)}
-                                                className="bg-gray-200 p-2 m-2 rounded flex-1 justify-center border-2 hover:border-blue-700"
+                                                className="relative bg-gray-200 p-2 m-2 rounded flex-1 justify-center border-2 hover:border-blue-700"
                                             >
-                                                <Image className="m-1" src={PDFFIle} alt="pdf-file" />
-                                                <p className="font-poppins font-semibold text-sm">
-                                                    {TrimFileName(topic.fileName)}
-                                                </p>
+                                                {
+                                                    user?.userType === "teacher" &&
+                                                    <div
+                                                        className="absolute right-0 top-0 mx-2 p-1"
+                                                        onClick={() => deleteNotesData(topicSelected, topic)}
+                                                    >
+                                                        <i className="fa fa-trash hover:text-red-500" aria-hidden="true"></i>
+                                                    </div>
+                                                }
+                                                <div
+                                                    onClick={() => handlePreviewNotes(topic)}
+                                                >
+                                                    <Image className="m-1" src={PDFFIle} alt="pdf-file" />
+                                                    <p className="font-poppins font-semibold text-sm">
+                                                        {TrimFileName(topic.fileName)}
+                                                    </p>
+                                                </div>
+
                                             </div>
                                         }
                                         {
                                             topic.fileType === "Image" &&
                                             <div
-                                                onClick={() => handlePreviewNotes(topic)}
-                                                className="bg-gray-200 p-2 m-2 rounded flex-1 justify-center">
-                                                <Image className="m-1" src={ImageFile} alt="pdf-file" />
-                                                <p className="font-poppins font-semibold text-sm">
-                                                    {TrimFileName(topic.fileName)}
-                                                </p>
+                                                className="relative bg-gray-200 p-2 m-2 rounded flex-1 justify-center border-2 hover:border-blue-700"
+                                            >
+                                                {
+                                                    user?.userType === "teacher" &&
+                                                    <div
+                                                        className="absolute right-0 top-0 mx-2 p-1"
+                                                        onClick={() => deleteNotesData(topicSelected, topic)}
+                                                    >
+                                                        <i className="fa fa-trash hover:text-red-500" aria-hidden="true"></i>
+                                                    </div>
+                                                }
+                                                <div
+                                                    onClick={() => handlePreviewNotes(topic)}
+                                                >
+                                                    <Image className="m-1" src={ImageFile} alt="pdf-file" />
+                                                    <p className="font-poppins font-semibold text-sm">
+                                                        {TrimFileName(topic.fileName)}
+                                                    </p>
+                                                </div>
+
                                             </div>
                                         }
                                         {
                                             topic.fileType === "PPT" &&
-                                            <div className="bg-gray-200 p-2 m-2 rounded flex-1 justify-center">
-                                                <Image className="m-1" src={PPTFile} alt="pdf-file" />
-                                                <p className="font-poppins font-semibold text-sm">
-                                                    {TrimFileName(topic.fileName)}
-                                                </p>
+                                            <div
+                                                className="relative bg-gray-200 p-2 m-2 rounded flex-1 justify-center border-2 hover:border-blue-700"
+                                            >
+                                                {
+                                                    user?.userType === "teacher" &&
+                                                    <div
+                                                        className="absolute right-0 top-0 mx-2 p-1"
+                                                        onClick={() => deleteNotesData(topicSelected, topic)}
+                                                    >
+                                                        <i className="fa fa-trash hover:text-red-500" aria-hidden="true"></i>
+                                                    </div>
+                                                }
+                                                <div
+                                                    onClick={() => handlePreviewNotes(topic)}
+                                                >
+                                                    <Image className="m-1" src={PPTFile} alt="pdf-file" />
+                                                    <p className="font-poppins font-semibold text-sm">
+                                                        {TrimFileName(topic.fileName)}
+                                                    </p>
+                                                </div>
+
                                             </div>
                                         }
 

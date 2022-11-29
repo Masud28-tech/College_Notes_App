@@ -119,7 +119,7 @@ const TeacherPage = ({ user }) => {
                                 {/* MODAL OF VIEW-TOPICS : VIEW BUTTON RESULT */}
                                 {
                                     isViewModalOpen && <div className="flex justify-center items-center mt-2">
-                                        <ViewModal setIsViewModalOpen={setIsViewModalOpen} />
+                                        <ViewModal setIsViewModalOpen={setIsViewModalOpen} user={user} />
                                     </div>
                                 }
 
