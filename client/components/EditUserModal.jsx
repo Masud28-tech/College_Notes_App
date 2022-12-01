@@ -1,9 +1,5 @@
-import { useState } from "react";
-
-import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
-
 const EditUserModal = () => {
-    
+
     const handleLogout = () => {
         localStorage.removeItem('currentUser');
         window.location.reload();
@@ -31,14 +27,6 @@ const EditUserModal = () => {
 
                     {/*body*/}
                     <div className="m-2 px-2 relative flex">
-                        <div className="m-2">
-                            <button
-                                className="border-none bg-transparent text-gray-500 active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3  hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
-                                type="button"
-                            >
-                                Edit
-                            </button>
-                        </div>
 
                         <div className="m-2">
                             <button
