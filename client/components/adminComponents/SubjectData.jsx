@@ -28,9 +28,9 @@ const SubjectData = ({ filterData, selectedSubject, handleSubjectSelector }) => 
 
 
     return (
-        <div className='flex flex-row w-full h-full overflow-auto'>
+        <div className='flex flex-row w-full h-full'>
             {/* <!-- SIDE BAR: SEMESTERS LISTED --> */}
-            <div className="w-1/3 h-full mx-1 mb-1 bg-white">
+            <div className="w-1/3 h-full mx-1 mb-1 bg-white overflow-auto">
                 <div className='bg-gray-800 w-full h-18 m-1 min-h-0 min-w-0 mb-2'>
                     <h2 className='font-semibold font-poppins text-lg text-white p-2'>Subjects</h2>
                 </div>

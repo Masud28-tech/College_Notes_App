@@ -25,12 +25,31 @@ const AdminPage = ({ user }) => {
         setSelectedSemister(sem);
     }
 
+    const handleMoveBack = () => {
+        if (!isBranchSelected) return;
+
+        if (isSemesterSelected === false)
+            setIsBranchSelected(false);
+        else
+            setIsSemesterSelected(false);
+    }
+
     return (
         <section className="h-screen w-screen bg-gray-200 flex flex-col-reverse sm:flex-row min-h-0 min-w-0 overflow-hidden">
             <main className="sm:h-full flex-1 flex flex-col min-h-0 min-w-0 overflow-auto">
 
                 {/* NAVBAR */}
                 <nav className="border-b bg-white px-6 py-2 flex items-center min-w-0 h-15">
+                    {/* MOVE BACKWORD AND MOVE FORWARD BUTTONS */}
+                    <button
+                        className="border rounded-full ml-2 w-10 h-10 text-center leading-none text-gray-200 bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                        type="button"
+                        onClick={handleMoveBack}
+                    >
+                        <i className="fas fa-arrow-left"></i>
+                    </button>
+
+                    {/* LOGO AND NAME HEADER */}
                     <Image src={Logo} alt="logo" className='w-12 h-13 p-1 m-3' />
                     <h1 className="font-semibold text-2xl">
                         Admin Logged In: Prof. <span className='text-red-800'>{user.adminName}</span>
@@ -42,6 +61,7 @@ const AdminPage = ({ user }) => {
                             className="w-full border-2 px-2 py-1 border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-gray-300 focus:bg-gray-100" />
                     </span>
 
+                    {/* SETTING BUTTON */}
                     <button
                         className="border rounded-full ml-2 w-10 h-10 text-center leading-none text-gray-200 bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                         type="button"

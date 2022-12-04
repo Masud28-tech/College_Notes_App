@@ -26,7 +26,7 @@ const DataContainer = ({ branch, semister }) => {
                 {
                     !isSubjectSelected
                         ? (
-                            <div className='flex justify-center self-center overflow-hidden'>
+                            <div className='flex justify-center self-center'>
                                 <div className="grid grid-cols-2 gap-4">
                                     {
                                         filterData.map((item, idx) => (
@@ -61,7 +61,7 @@ const DataContainer = ({ branch, semister }) => {
 
 
             {/* <!-- SIDE BAR: SEMESTERS LISTED --> */}
-            <div className="overflow-auto border p-2 mr-2 w-1/6 lg:pb-0 border-black bg-gray-300 lg:max-w-sm flex flex-row lg:flex-col flex-wrap lg:flex-nowrap">
+            <div className="overflow-auto border p-2 mr-2 w-1/6 lg:pb-0 border-black bg-gray-300 lg:max-w-sm flex flex-row lg:flex-col flex-wrap lg:flex-nowrap overflow-y-auto">
                 <div className='m-2 font-bold'>Teachers alloted</div>
 
                 {filterData.map(({ teacher, subject }, idx) => (
