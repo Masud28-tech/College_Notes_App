@@ -21,13 +21,13 @@ const SemistersContainer = ({ branch, handleSemesterSelector }) => {
                             >
                                 <div class="block rounded-lg shadow-lg bg-white max-w-sm text-center">
                                     <div class="py-3 px-6 border-b border-gray-300">
-                                        Semister
+                                        Semester
                                     </div>
                                     <a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">
                                     </a>
                                     <div class="p-6">
                                         <h5 class="text-gray-900 text-xl font-semibold mb-2 font-poppins">
-                                            {sem} Semister
+                                            {sem} Semester
                                         </h5>
                                     </div>
                                 </div>

@@ -103,7 +103,7 @@ const TeacherPage = ({ user }) => {
 
                                 {/* HEADER */}
                                 <div className='bg-gray-100 text-center m-2 rounded'>
-                                    <h1 className='p-2 text-xl font-poppins font-semibold'>{selectedSemester} Semister: {user.branch}</h1>
+                                    <h1 className='p-2 text-xl font-poppins font-semibold'>{selectedSemester} Semester: {user.branch}</h1>
                                 </div>
 
                                 {/* LOGOUT AND EDIT USER DATA MODAL */}

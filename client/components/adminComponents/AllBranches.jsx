@@ -8,7 +8,7 @@ const AllBranches = ({ handleBranchSelector }) => {
         <div className='flex flex-col bg-blue-500 w-full h-full min-h-0 min-w-0'>
             {/* HEADER */}
             <div className='bg-gray-100 text-center font-poppins font-bold m-2'>
-                <h1 className='p-2 text-2xl border-b-2'>Welcome To "SBJAIN Nnotes Manager" App</h1>
+                <h1 className='p-2 text-2xl border-b-2'>Welcome To "SBJAIN Notes Manager" App</h1>
                 <h3 className='p-1 text-lg text-gray-800'>Select the branch</h3>
             </div>
 

@@ -20,7 +20,7 @@ const DataContainer = ({ branch, semister }) => {
                 {/* HEADER */}
                 <div className='bg-gray-100 text-center font-poppins font-bold m-2'>
                     <h1 className='p-2 text-2xl'>Branch: {branch}</h1>
-                    <h3 className='p-1 text-lg text-gray-800'>" {semister} Semister "</h3>
+                    <h3 className='p-1 text-lg text-gray-800'>" {semister} Semester "</h3>
                 </div>
 
                 {
