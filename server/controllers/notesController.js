@@ -67,6 +67,12 @@ module.exports.pushIntoTopicsPDFNotes = async (req, res, next) => {
             return res.json({ msg: "Data Not Found", status: false });
         }
 
+        let newDate = new Date();
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        let uploadDate = `${date}-${month<10?`0${month}`:`${month}`}-${year}`;
+
         noteData = await NotesData.findOneAndUpdate(
             { subject: topicSelected.subject },
             {
@@ -75,7 +81,8 @@ module.exports.pushIntoTopicsPDFNotes = async (req, res, next) => {
                         category: category,
                         fileName: fileName,
                         fileType: fileType,
-                        fileUrl: pdfFile
+                        fileUrl: pdfFile,
+                        date:uploadDate
                     }
                 }
             },

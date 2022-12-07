@@ -91,8 +91,12 @@ const ViewModal = ({ setIsViewModalOpen, user }) => {
                                                     onClick={() => handlePreviewNotes(topic)}
                                                 >
                                                     <Image className="m-1" src={PDFFIle} alt="pdf-file" />
-                                                    <p className="font-poppins font-semibold text-sm">
+                                                    <p className="font-poppins font-semibold text-sm border-b-2 border-gray-400 mb-2">
                                                         {TrimFileName(topic.fileName)}
+                                                    </p>
+                                                    <p className='font-poppins font-bold text-xs text-red-700 mb-1 right-0'>
+                                                        Uploaded On: &nbsp;
+                                                        {topic?.date}
                                                     </p>
                                                 </div>
 

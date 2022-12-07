@@ -43,7 +43,7 @@ export const NotesContextProvider = ({ children }) => {
             console.log(res.msg);
         }
         else {
-            console.log("File deleted Successfully");
+            alert("File deleted Successfully");
             window.location.reload();
         }
     }
