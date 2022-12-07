@@ -64,7 +64,7 @@ const StudentRegister = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
         if (handleFormValidation()) {
-            const { data } = await axios.post(registerStudentRoute, { studentName, email, branch,semester, rollNumber, password });
+            const { data } = await axios.post(registerStudentRoute, { studentName, email, branch, semester, rollNumber, password });
 
             if (!data.status) {
                 toast.error(data.msg, toastOptions);
@@ -80,14 +80,14 @@ const StudentRegister = () => {
 
     return (
         <>
-            <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-                <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl">
+            <div className="relative flex flex-col justify-center min-h-screen">
+                <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl overflow-hidden">
                     <Image src={Logo} alt="logo" className='mt-2' />
 
                     <h1 className="text-3xl font-semibold text-center  text-purple-900 uppercase pb-4 m-4">
                         Student Register
                     </h1>
-                    <form className="mt-6">
+                    <form className="mt-6 h-96 overflow-auto">
                         <div className="mb-2">
                             <label
                                 htmlFor="studentName"
@@ -136,6 +136,7 @@ const StudentRegister = () => {
                                 required
                                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                             >
+                                <option>Select your branch</option>
                                 <option>Computer Science</option>
                                 <option>IT</option>
                                 <option>Mechanical</option>
@@ -161,6 +162,7 @@ const StudentRegister = () => {
                                 required
                                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                             >
+                                <option>Select your Semester</option>
                                 <option>1st</option>
                                 <option>2nd</option>
                                 <option>3rd</option>
@@ -222,12 +224,7 @@ const StudentRegister = () => {
                                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                             />
                         </div>
-                        <a
-                            href="#"
-                            className="text-xs text-purple-600 hover:underline"
-                        >
-                            Forget Password?
-                        </a>
+
                         <div className="mt-6">
                             <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
                                 onClick={handleSignUp}
@@ -236,6 +233,7 @@ const StudentRegister = () => {
                             </button>
                         </div>
                     </form>
+
                     <div className="relative flex items-center justify-center w-full mt-6 border border-t">
                         <div className="absolute px-5 bg-white">Or</div>
                     </div>
