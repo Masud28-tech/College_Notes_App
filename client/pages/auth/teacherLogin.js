@@ -25,7 +25,7 @@ const TeacherLogin = () => {
             console.log("Please enter valid email id");
             return false;
         }
-        else if (email.length <= 12 || email.substring(email.length - 12, email.length) != "@sbjit.edu.in") {
+        else if (email.length <= 13 || email.substring(email.length - 13, email.length) != "@sbjit.edu.in") {
             alert("Please enter valid email id , NOTE: Valid email must end with @sbjit.edu.in");
             return false;
         }

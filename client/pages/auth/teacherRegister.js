@@ -50,7 +50,7 @@ const TeacherRegister = () => {
             console.log("Please enter valid email id");
             return false;
         }
-        else if (email.length <= 12 || email.substring(email.length - 12, email.length) != "@sbjit.edu.in") {
+        else if (email.length <= 13 || email.substring(email.length - 13, email.length) != "@sbjit.edu.in") {
             toast.error("Please enter valid email id , NOTE: Valid email must end with @sbjit.edu.in", toastOptions);
             console.log("Please enter valid email id , NOTE: Valid email must end with @sbjit.edu.in");
             return false;
@@ -134,6 +134,7 @@ const TeacherRegister = () => {
                                 required
                                 className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                             >
+                                <option>Choose Your Brnach</option>
                                 <option>Computer Science</option>
                                 <option>IT</option>
                                 <option>Mechanical</option>
